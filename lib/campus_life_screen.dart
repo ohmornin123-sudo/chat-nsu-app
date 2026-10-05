@@ -2330,7 +2330,7 @@ class _CampusLifeScreenState extends State<CampusLifeScreen> {
       elevation: 1.5,
       color: Colors.white,
       child: Padding(
-        padding: const EdgeInsets.all(16),
+        padding: const EdgeInsets.all(12),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -2339,22 +2339,22 @@ class _CampusLifeScreenState extends State<CampusLifeScreen> {
               children: [
                 const Row(
                   children: [
-                    Icon(Icons.storefront_rounded, color: Color(0xFF003B70), size: 20),
-                    SizedBox(width: 8),
+                    Icon(Icons.storefront_rounded, color: Color(0xFF003B70), size: 18),
+                    SizedBox(width: 6),
                     Text('남서울대 공식 편의·복지시설',
-                        style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold)),
+                        style: TextStyle(fontSize: 14.5, fontWeight: FontWeight.bold)),
                   ],
                 ),
                 Container(
-                  padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 3),
+                  padding: const EdgeInsets.symmetric(horizontal: 7, vertical: 2.5),
                   decoration: BoxDecoration(
                     color: const Color(0xFF003B70).withValues(alpha: 0.08),
-                    borderRadius: BorderRadius.circular(6),
+                    borderRadius: BorderRadius.circular(5),
                   ),
                   child: const Text(
                     '홈페이지 공식 입점',
                     style: TextStyle(
-                      fontSize: 10.5,
+                      fontSize: 10,
                       fontWeight: FontWeight.bold,
                       color: Color(0xFF003B70),
                     ),
@@ -2362,15 +2362,15 @@ class _CampusLifeScreenState extends State<CampusLifeScreen> {
                 ),
               ],
             ),
-            const Divider(height: 20),
+            const Divider(height: 14),
             GridView.builder(
               shrinkWrap: true,
               physics: const NeverScrollableScrollPhysics(),
               gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                 crossAxisCount: 2,
-                childAspectRatio: 2.1,
-                crossAxisSpacing: 10,
-                mainAxisSpacing: 10,
+                childAspectRatio: 2.6,
+                crossAxisSpacing: 8,
+                mainAxisSpacing: 8,
               ),
               itemCount: items.length,
               itemBuilder: (context, idx) {
@@ -2379,7 +2379,7 @@ class _CampusLifeScreenState extends State<CampusLifeScreen> {
                 final tel = item['tel'] as String;
 
                 return InkWell(
-                  borderRadius: BorderRadius.circular(10),
+                  borderRadius: BorderRadius.circular(8),
                   onTap: () {
                     if (tel.isNotEmpty) {
                       launchUrl(Uri.parse('tel:$tel'));
@@ -2388,23 +2388,23 @@ class _CampusLifeScreenState extends State<CampusLifeScreen> {
                     }
                   },
                   child: Container(
-                    padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 8),
+                    padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 6),
                     decoration: BoxDecoration(
                       color: const Color(0xFFF8F9FA),
-                      borderRadius: BorderRadius.circular(10),
+                      borderRadius: BorderRadius.circular(8),
                       border: Border.all(color: Colors.grey.shade200),
                     ),
                     child: Row(
                       children: [
                         Container(
-                          padding: const EdgeInsets.all(6),
+                          padding: const EdgeInsets.all(5),
                           decoration: BoxDecoration(
                             color: color.withValues(alpha: 0.12),
-                            borderRadius: BorderRadius.circular(8),
+                            borderRadius: BorderRadius.circular(6),
                           ),
-                          child: Icon(item['icon'] as IconData, size: 20, color: color),
+                          child: Icon(item['icon'] as IconData, size: 17, color: color),
                         ),
-                        const SizedBox(width: 8),
+                        const SizedBox(width: 7),
                         Expanded(
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
@@ -2413,14 +2413,14 @@ class _CampusLifeScreenState extends State<CampusLifeScreen> {
                               Text(
                                 item['name'] as String,
                                 style: const TextStyle(
-                                    fontWeight: FontWeight.bold, fontSize: 11.5),
+                                    fontWeight: FontWeight.bold, fontSize: 11),
                                 maxLines: 1,
                                 overflow: TextOverflow.ellipsis,
                               ),
-                              const SizedBox(height: 2),
+                              const SizedBox(height: 1),
                               Text(
                                 item['loc'] as String,
-                                style: TextStyle(fontSize: 10, color: Colors.grey.shade600),
+                                style: TextStyle(fontSize: 9.5, color: Colors.grey.shade600),
                                 maxLines: 1,
                                 overflow: TextOverflow.ellipsis,
                               ),
@@ -2433,33 +2433,33 @@ class _CampusLifeScreenState extends State<CampusLifeScreen> {
                 );
               },
             ),
-            const SizedBox(height: 12),
+            const SizedBox(height: 8),
             InkWell(
-              borderRadius: BorderRadius.circular(10),
+              borderRadius: BorderRadius.circular(8),
               onTap: _showAllWelfareFacilitiesModal,
               child: Container(
                 width: double.infinity,
-                padding: const EdgeInsets.symmetric(vertical: 11, horizontal: 12),
+                padding: const EdgeInsets.symmetric(vertical: 9, horizontal: 10),
                 decoration: BoxDecoration(
                   color: const Color(0xFF003B70),
-                  borderRadius: BorderRadius.circular(10),
+                  borderRadius: BorderRadius.circular(8),
                   boxShadow: [
                     BoxShadow(
-                      color: const Color(0xFF003B70).withValues(alpha: 0.2),
-                      blurRadius: 4,
-                      offset: const Offset(0, 2),
+                      color: const Color(0xFF003B70).withValues(alpha: 0.15),
+                      blurRadius: 3,
+                      offset: const Offset(0, 1.5),
                     ),
                   ],
                 ),
                 child: const Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Icon(Icons.format_list_bulleted_rounded, size: 17, color: Colors.white),
-                    SizedBox(width: 6),
+                    Icon(Icons.format_list_bulleted_rounded, size: 15, color: Colors.white),
+                    SizedBox(width: 5),
                     Text(
                       '남서울대 공식 편의시설 17개소 전체보기 ➔',
                       style: TextStyle(
-                        fontSize: 12.5,
+                        fontSize: 12,
                         fontWeight: FontWeight.bold,
                         color: Colors.white,
                       ),
