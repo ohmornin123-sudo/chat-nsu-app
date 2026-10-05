@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<style>
+  @page {
+    size: A4;
+    margin: 20mm;
+  }
+  body {
+    font-family: 'Malgun Gothic', 'Apple SD Gothic Neo', sans-serif;
+    color: #222;
+    line-height: 1.6;
+    font-size: 13px;
+    margin: 0;
+    padding: 0;
+  }
+  h1 {
+    font-size: 22px;
+    color: #003B70;
+    border-bottom: 2px solid #003B70;
+    padding-bottom: 8px;
+    margin-top: 0;
+    margin-bottom: 16px;
+  }
+  h2 {
+    font-size: 15px;
+    color: #111;
+    margin-top: 18px;
+    margin-bottom: 8px;
+    border-left: 4px solid #003B70;
+    padding-left: 8px;
+  }
+  h3 {
+    font-size: 13.5px;
+    color: #003B70;
+    margin-top: 14px;
+    margin-bottom: 6px;
+  }
+  ul {
+    margin-top: 4px;
+    margin-bottom: 6px;
+    padding-left: 20px;
+  }
+  li {
+    margin-bottom: 4px;
+  }
+  li > ul {
+    margin-top: 2px;
+    margin-bottom: 4px;
+    padding-left: 18px;
+  }
+  li > ul > li {
+    color: #444;
+    font-size: 12.5px;
+  }
+  .highlight {
+    font-weight: bold;
+    color: #003B70;
+  }
+  .tag {
+    display: inline-block;
+    background: #E8F0FE;
+    color: #1967D2;
+    padding: 2px 6px;
+    border-radius: 4px;
+    font-size: 11px;
+    font-weight: bold;
+  }
+</style>
+</head>
+<body>
+
+<h1>[캡스톤 디자인 5주차 주간 진행 보고서]</h1>
+
+<h2>1. 프로젝트 개요</h2>
+<ul>
+  <li><b>프로젝트명:</b> CHAT-NSU (남서울대학교 스마트 캠퍼스 종합 어시스턴트)</li>
+  <li><b>보고 주차:</b> 5주차 (9월 28일 ~ 10월 5일)</li>
+  <li><b>개발 플랫폼:</b> Flutter Web/Mobile (크로스 플랫폼) & FastAPI (Python 백엔드)</li>
+  <li><b>실시간 웹 배포:</b> <a href="https://singular-moonbeam-adafa6.netlify.app">https://singular-moonbeam-adafa6.netlify.app</a></li>
+</ul>
+
+<h2>2. 이번 주차 수행 내용 (역할 분담)</h2>
+
+<h3>프론트엔드 김기석</h3>
+<ul>
+  <li><b>스마트 학점 계산기 및 졸업 로드맵 플래너 구현</b>
+    <ul>
+      <li>학적 정보(학과, 현재 학년, 학기) 및 영역별 취득 학점(전공필수, 전공선택, 교양) 직접 입력·수정 모달 폼 구축</li>
+      <li>정규 잔여 학기 수 기반 <code>(남은 학점 ÷ 잔여 학기) = 학기당 권장 수강 학점</code> 자동 연산 로직 구현</li>
+      <li>권장 수강 학점에 따른 단계별 진단 피드백(정규 졸업 안정 / 최대 학점 주의 / 계절학기 권장 경고) 시각화 카드 배치</li>
+    </ul>
+  </li>
+  <li><b>남서울대 실제 교육과정 및 교양필수 과목 연동</b>
+    <ul>
+      <li>지능정보통신공학과 1~4학년 공식 전공 과목 및 학수번호, 학점 데이터 구축 및 연동</li>
+      <li>남서울대 공통 교양필수(채플 4회, 아가페인문학, 현대인과 사회적 영성 등) 과목 데이터 추가 구축</li>
+      <li>학년별 필터 칩([전체], [1~4학년], [교양필수]) 및 실시간 취득 학점에 가감되는 인터랙티브 체크박스 리스트 구현</li>
+      <li>학생의 현재 학년/학기를 기반으로 다음 학기에 수강해야 할 필수·권장 과목 우선 추천 알고리즘 적용</li>
+    </ul>
+  </li>
+  <li><b>가짜(Mock) 데이터 전면 제거 및 100% 공식 실데이터 정제</b>
+    <ul>
+      <li>앱 내 모호한 호관 번호 표기를 전면 제거하고, 학교 공식 건물명(학생복지회관, 성암기념중앙도서관, 지식정보관, 성암문화체육관, 21세기개발관, 공학1관 등)으로 동기화 완료</li>
+    </ul>
+  </li>
+  <li><b>학교 홈페이지 공식 식단표 4개 구역(1층·2층·3층·멀베리) 완벽 연동</b>
+    <ul>
+      <li>학교 공식 홈페이지 식단표 페이지(menu_id=481, 483, 484, 485)와 1:1 완벽 일치하는 4개 코너 시스템 구축</li>
+      <li>1층 푸드코트(돈까스/덮밥/라면), 2층 백반·찌개(5,500원), 3층 교직원식당(6,500원 자율배식 한식 뷔페 - 학생 이용 가능), 엘림2관 멀베리(천원의 아침밥 1,000원 & 중·석식) 전면 반영</li>
+      <li>요일별(월~금) 실시간 학식 조회 탭 및 1주일 주간식단표 전체보기 모달 팝업 연동</li>
+    </ul>
+  </li>
+  <li><b>남서울대 공식 편의·복지시설 17개소 UI 개편 및 직통 전화 연동</b>
+    <ul>
+      <li>학교 공식 홈페이지 입점 17개 전 매장의 공식 명칭, 호실 위치, 직통 전화번호 데이터 연동</li>
+      <li>메인 화면에 주요 6개 매장(브래댄코, 리안헤어, 크린토피아, 누보아트, CU학생회관점, 남서울출력) 직관적 카드 배치</li>
+      <li>상단 탭 복잡도를 제거하고 실시간 검색창 및 원클릭 전화걸기(tel:)가 지원되는 17개소 전체보기 모달 구축</li>
+    </ul>
+  </li>
+  <li><b>로컬 영구 저장소(SharedPreferences) 및 웹 배포 파이프라인 구축</b>
+    <ul>
+      <li>사용자 입력 학적 정보 및 교과목 이수 체크 상태가 앱 재실행 시에도 유지되도록 디바이스 로컬 영구 저장소 연동 완료</li>
+      <li>Flutter Web 최신 프로덕션 빌드 완료 및 Netlify 클라우드 자동 배포 파이프라인 구축 및 HTTP 200 서비스 검증 완료</li>
+    </ul>
+  </li>
+</ul>
+
+<h3>백엔드 김영훈</h3>
+<ul>
+  <li><b>인프라 고정 및 네트워크 통신 환경 안정화</b>
+    <ul>
+      <li>기존 임시 ngrok 터널링 환경에서 DuckDNS 기반 고정 IP 도메인(http://nsugpt.duckdns.org:8000) 인프라 구축 및 포트포워딩 배포 완료</li>
+      <li>모바일 앱 및 웹(Web)과의 크로스 오리진 통신을 위한 CORS 정책 및 헤더 최적화 완료</li>
+    </ul>
+  </li>
+  <li><b>학칙 RAG 파이프라인 및 실시간 스트리밍 서빙</b>
+    <ul>
+      <li>남서울대 공식 학칙 규정 데이터베이스 기반 검색 증강 생성(RAG) 파이프라인 구축</li>
+      <li>토큰 단위 SSE 실시간 스트리밍 엔드포인트(POST /chat/stream) 안정화 및 응답 메타데이터(출처 조항, 확정형 여부) 스키마 제공</li>
+    </ul>
+  </li>
+  <li><b>편의시설 및 학사 데이터베이스 구축 (MongoDB Atlas)</b>
+    <ul>
+      <li>학교 홈페이지 공식 편의·복지시설 17개소 데이터 크롤링 및 MongoDB Atlas welfare_facilities 컬렉션 시딩 완료</li>
+      <li>편의시설 조회 API 엔드포인트(GET /welfare/facilities) 및 학점 자가진단 API(POST /graduation/check) 연동 지원</li>
+    </ul>
+  </li>
+</ul>
+
+<h2>3. 주차별 목표 달성도</h2>
+<ul>
+  <li><b>프론트엔드 학점 계산기 고도화 및 실제 교육과정 연동:</b> <span class="tag">100% 완료</span></li>
+  <li><b>가짜 데이터 정제 및 공식 건물명 / 4개 구역 학식 / 17개 편의시설 실데이터 구축:</b> <span class="tag">100% 완료</span></li>
+  <li><b>로컬 데이터 영구 저장 및 웹(Netlify) 자동 배포 환경 구축:</b> <span class="tag">100% 완료</span></li>
+  <li><b>백엔드 고정 도메인(DuckDNS) 인프라 전환 및 학칙 RAG 스트리밍 연동:</b> <span class="tag">100% 완료</span></li>
+  <li><b>전체 5주차 계획 대비 종합 달성도:</b> <span class="tag">100%</span></li>
+</ul>
+
+<h2>4. 차주(6주차) 계획</h2>
+<ul>
+  <li>모바일 / 웹 크로스 플랫폼 실서비스 환경 라이브 데모 시연 및 안정성 검증</li>
+  <li><b>백엔드 RAG 챗봇 질의응답 고도화:</b>
+    <ul>
+      <li>학사 규정 외에도 오늘의 학식(4개 구역) 및 편의시설 위치를 챗봇 질문을 통해 자연어로 안내하는 통합 RAG 파이프라인 설계</li>
+      <li>실제 학사 FAQ 및 학과별 졸업요건 추가 데이터 임베딩 고도화</li>
+    </ul>
+  </li>
+  <li><b>학생 생활 밀착형 부가 기능 최적화:</b>
+    <ul>
+      <li>성환역 ⇄ 남서울대 셔틀버스 실시간 출발 타이머 및 시간표 고도화</li>
+      <li>학교 홈페이지 실시간 학사 공지사항 크롤러 파이프라인 연계</li>
+    </ul>
+  </li>
+</ul>
+
+</body>
+</html>
