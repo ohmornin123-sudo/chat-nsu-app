@@ -488,7 +488,12 @@ class _CampusLifeScreenState extends State<CampusLifeScreen> {
 
           const SizedBox(height: 16),
 
-          // 3. 🔍 [스마트 검색바] 5자리 강의실 & 건물 실시간 검색
+          // 3. 📚 [실시간] 성암기념중앙도서관(9호관) 좌석 현황 위젯 (버스 바로 밑 배치!)
+          _buildLibrarySection(),
+
+          const SizedBox(height: 16),
+
+          // 4. 🔍 [스마트 검색바] 5자리 강의실 & 건물 실시간 검색
           Container(
             decoration: BoxDecoration(
               color: Colors.white,
@@ -588,12 +593,7 @@ class _CampusLifeScreenState extends State<CampusLifeScreen> {
 
           const SizedBox(height: 16),
 
-          // 6. 📚 성암기념중앙도서관(9호관) 좌석 현황 위젯
-          _buildLibrarySection(),
-
-          const SizedBox(height: 16),
-
-          // 7. 🗺️ 캠퍼스 주요 건물 탐색 리스트 (터치 시 상세 정보 모달)
+          // 6. 🗺️ 캠퍼스 주요 건물 탐색 리스트 (터치 시 상세 정보 모달)
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
@@ -1884,7 +1884,8 @@ class _CampusLifeScreenState extends State<CampusLifeScreen> {
   }
 
   // --------------------------------------------------------------------------
-  // [위젯 2] 성환역 ⇄ 남서울대 셔틀버스 안내
+  // --------------------------------------------------------------------------
+  // [위젯 2] 성환역 ⇄ 남서울대 셔틀버스 안내 (정확한 시간표 반영)
   // --------------------------------------------------------------------------
   Widget _buildShuttleBusSection() {
     return Card(
@@ -1903,24 +1904,44 @@ class _CampusLifeScreenState extends State<CampusLifeScreen> {
                   children: [
                     Icon(Icons.directions_bus_filled_rounded, color: Color(0xFF003B70), size: 20),
                     SizedBox(width: 8),
-                    Text('성환역 ⇄ 학교 셔틀버스',
+                    Text('성환역 ⇄ 학교 셔틀버스 시간표',
                         style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold)),
                   ],
                 ),
-                Container(
-                  padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
-                  decoration: BoxDecoration(
-                    color: Colors.green.shade50,
-                    borderRadius: BorderRadius.circular(6),
-                  ),
-                  child: Text(
-                    '재학생 무료',
-                    style: TextStyle(
-                      fontSize: 11,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.green.shade800,
+                Row(
+                  children: [
+                    Container(
+                      padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                      decoration: BoxDecoration(
+                        color: Colors.green.shade50,
+                        borderRadius: BorderRadius.circular(6),
+                      ),
+                      child: Text(
+                        '전액 무료',
+                        style: TextStyle(
+                          fontSize: 11,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.green.shade800,
+                        ),
+                      ),
                     ),
-                  ),
+                    const SizedBox(width: 6),
+                    Container(
+                      padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                      decoration: BoxDecoration(
+                        color: Colors.blue.shade50,
+                        borderRadius: BorderRadius.circular(6),
+                      ),
+                      child: Text(
+                        '순환 운행',
+                        style: TextStyle(
+                          fontSize: 11,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.blue.shade800,
+                        ),
+                      ),
+                    ),
+                  ],
                 ),
               ],
             ),
@@ -1929,27 +1950,61 @@ class _CampusLifeScreenState extends State<CampusLifeScreen> {
               children: [
                 Expanded(
                   child: _buildBusInfoBox(
-                    title: '성환역 ➔ 학교',
-                    desc: '성환역 1번 출구 승강장',
-                    badge: '수시 운행 (5~15분)',
+                    title: '성환역 ➔ 학교 (등교)',
+                    desc: '성환역 1번 출구 (도솔신협 앞)',
+                    badge: '첫차 08:00 / 피크 3~6분',
                     badgeColor: Colors.blue.shade700,
                   ),
                 ),
                 const SizedBox(width: 10),
                 Expanded(
                   child: _buildBusInfoBox(
-                    title: '학교 ➔ 성환역',
-                    desc: '정문 및 21세기개발관(12호관) 앞 승강장',
-                    badge: '막차 21:30',
+                    title: '학교 ➔ 성환역 (하교)',
+                    desc: '정문 통학버스장 / 12호관 앞',
+                    badge: '피크 5~8분 / 막차 21:30',
                     badgeColor: Colors.indigo.shade700,
                   ),
                 ),
               ],
             ),
-            const SizedBox(height: 10),
-            Text(
-              '※ 등교 피크타임(08:20~10:30)에는 5~10분 간격으로 집중 배차됩니다.',
-              style: TextStyle(fontSize: 11.5, color: Colors.grey.shade600),
+            const SizedBox(height: 12),
+            // 시간대별 핵심 운행 요약 바
+            Container(
+              padding: const EdgeInsets.all(12),
+              decoration: BoxDecoration(
+                color: const Color(0xFFF1F5F9),
+                borderRadius: BorderRadius.circular(10),
+                border: Border.all(color: const Color(0xFFCBD5E1)),
+              ),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  const Row(
+                    children: [
+                      Icon(Icons.schedule_rounded, size: 15, color: Color(0xFF003B70)),
+                      SizedBox(width: 6),
+                      Text('시간대별 공식 배차 기준 (월~금 운행)',
+                          style: TextStyle(fontSize: 12, fontWeight: FontWeight.bold, color: Color(0xFF003B70))),
+                    ],
+                  ),
+                  const SizedBox(height: 8),
+                  Wrap(
+                    spacing: 6,
+                    runSpacing: 6,
+                    children: [
+                      _buildScheduleBadge('등교 피크(08:20~10:30)', '3~6분 간격', Colors.blue.shade700),
+                      _buildScheduleBadge('주간 평시(10:30~17:00)', '10~15분 간격', Colors.teal.shade700),
+                      _buildScheduleBadge('하교 피크(17:00~18:30)', '5~8분 간격', Colors.orange.shade800),
+                      _buildScheduleBadge('야간 정시(19:30~21:30)', '30분 간격 (막차 21:30)', Colors.indigo.shade800),
+                    ],
+                  ),
+                  const SizedBox(height: 8),
+                  Text(
+                    '※ 야간 정시 출발: 19:30 | 20:00 | 20:30 | 21:00 | 21:30 (금요일은 18:30 이후 단축 운행)',
+                    style: TextStyle(fontSize: 11, color: Colors.grey.shade700),
+                  ),
+                ],
+              ),
             ),
             const SizedBox(height: 12),
             SizedBox(
@@ -1958,17 +2013,35 @@ class _CampusLifeScreenState extends State<CampusLifeScreen> {
                 style: OutlinedButton.styleFrom(
                   side: const BorderSide(color: Color(0xFF003B70)),
                   foregroundColor: const Color(0xFF003B70),
-                  padding: const EdgeInsets.symmetric(vertical: 10),
+                  padding: const EdgeInsets.symmetric(vertical: 11),
                   shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
                 ),
                 onPressed: _showBusTimetableModal,
-                icon: const Icon(Icons.schedule_rounded, size: 18),
-                label: const Text('통학·셔틀버스 전체 노선 & 시간표 보기',
+                icon: const Icon(Icons.table_chart_rounded, size: 18),
+                label: const Text('통학·셔틀버스 전체 노선 & 상세 시간표 보기',
                     style: TextStyle(fontWeight: FontWeight.bold, fontSize: 13)),
               ),
             ),
           ],
         ),
+      ),
+    );
+  }
+
+  Widget _buildScheduleBadge(String label, String value, Color color) {
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(6),
+        border: Border.all(color: color.withValues(alpha: 0.3)),
+      ),
+      child: Row(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Text('$label: ', style: TextStyle(fontSize: 11, color: Colors.grey.shade700)),
+          Text(value, style: TextStyle(fontSize: 11, fontWeight: FontWeight.bold, color: color)),
+        ],
       ),
     );
   }
@@ -3090,7 +3163,7 @@ class _CampusLifeScreenState extends State<CampusLifeScreen> {
                   Expanded(
                     child: TabBarView(
                       children: [
-                        // 1. 성환역 셔틀버스
+                        // 1. 성환역 셔틀버스 (정확한 시간대별 타임테이블)
                         ListView(
                           controller: controller,
                           padding: const EdgeInsets.all(18),
@@ -3104,9 +3177,15 @@ class _CampusLifeScreenState extends State<CampusLifeScreen> {
                               child: const Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
-                                  Text('📍 승하차 위치 안내 (전액 무료)',
-                                      style: TextStyle(fontWeight: FontWeight.bold, fontSize: 13.5)),
-                                  SizedBox(height: 4),
+                                  Row(
+                                    children: [
+                                      Icon(Icons.pin_drop_rounded, size: 16, color: Color(0xFF003B70)),
+                                      SizedBox(width: 4),
+                                      Text('승하차 전용 승강장 안내 (재학생 전액 무료)',
+                                          style: TextStyle(fontWeight: FontWeight.bold, fontSize: 13.5, color: Color(0xFF003B70))),
+                                    ],
+                                  ),
+                                  SizedBox(height: 6),
                                   Text('• 성환역: 1호선 성환역 1번 출구 도솔신협 앞 전용 승강장',
                                       style: TextStyle(fontSize: 12.5)),
                                   Text('• 학교: 정문 경비실 앞 및 21세기개발관(12호관) 앞 전용 승강장',
@@ -3115,13 +3194,40 @@ class _CampusLifeScreenState extends State<CampusLifeScreen> {
                               ),
                             ),
                             const SizedBox(height: 14),
-                            _buildTimelineCard('08:20 ~ 10:30', '등교 피크타임 집중 배차', '3 ~ 6분 간격 수시 운행', Colors.blue.shade700),
-                            _buildTimelineCard('10:30 ~ 17:00', '주간 평시 배차', '10 ~ 15분 간격 운행', Colors.teal.shade700),
-                            _buildTimelineCard('17:00 ~ 19:30', '하교 피크타임 집중 배차', '5 ~ 10분 간격 운행', Colors.orange.shade800),
-                            _buildTimelineCard('19:30 ~ 21:30', '야간 하교 배차 (막차 21:30)', '20:00 / 20:30 / 21:00 / 21:30', Colors.indigo.shade800),
-                            const SizedBox(height: 8),
-                            Text('※ 주말 및 공휴일은 미운행되며, 시험기간에는 탄력적으로 연장 운행됩니다.',
-                                style: TextStyle(fontSize: 11.5, color: Colors.grey.shade600)),
+                            _buildTimelineCard('08:00 ~ 08:20', '등교 시작 (첫차 08:00)', '10분 간격 배차 출발', Colors.blue.shade600),
+                            _buildTimelineCard('08:20 ~ 10:30', '등교 피크타임 집중 배차', '3 ~ 6분 간격 수시 출발 (전철 도착 시 즉시 순환)', Colors.blue.shade800),
+                            _buildTimelineCard('10:30 ~ 12:00', '오전 평시 순환 배차', '10 ~ 15분 간격 수시 운행', Colors.teal.shade700),
+                            _buildTimelineCard('12:00 ~ 14:00', '점심시간 순환 배차', '10 ~ 15분 간격 운행', Colors.cyan.shade800),
+                            _buildTimelineCard('14:00 ~ 17:00', '오후 강의시간 평시 배차', '10 ~ 15분 간격 운행', Colors.teal.shade800),
+                            _buildTimelineCard('17:00 ~ 18:30', '하교 피크타임 집중 배차', '5 ~ 8분 간격 집중 순환 배차', Colors.orange.shade800),
+                            _buildTimelineCard('18:30 ~ 19:30', '저녁 하교 배차', '15분 간격 순환 운행', Colors.deepOrange.shade800),
+                            _buildTimelineCard('19:30 ~ 21:30', '야간 정시 출발 (막차 21:30)', '19:30 | 20:00 | 20:30 | 21:00 | 21:30 (30분 간격)', Colors.indigo.shade800),
+                            const SizedBox(height: 10),
+                            Container(
+                              padding: const EdgeInsets.all(12),
+                              decoration: BoxDecoration(
+                                color: Colors.amber.shade50,
+                                borderRadius: BorderRadius.circular(10),
+                                border: Border.all(color: Colors.amber.shade200),
+                              ),
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Row(
+                                    children: [
+                                      Icon(Icons.info_outline_rounded, size: 15, color: Colors.amber.shade900),
+                                      const SizedBox(width: 6),
+                                      Text('요일별 운행 안내',
+                                          style: TextStyle(fontWeight: FontWeight.bold, fontSize: 12, color: Colors.amber.shade900)),
+                                    ],
+                                  ),
+                                  const SizedBox(height: 4),
+                                  const Text('• 월~목요일: 21:30 막차까지 정상 운행', style: TextStyle(fontSize: 11.5)),
+                                  const Text('• 금요일: 학생 조기 귀가로 인해 18:30 이후 단축 운행', style: TextStyle(fontSize: 11.5)),
+                                  const Text('• 주말·공휴일·방학: 미운행 (시험기간 별도 연장 운행)', style: TextStyle(fontSize: 11.5)),
+                                ],
+                              ),
+                            ),
                           ],
                         ),
 
@@ -3153,11 +3259,39 @@ class _CampusLifeScreenState extends State<CampusLifeScreen> {
                           ],
                         ),
 
-                        // 3. 수도권 통학버스
+                        // 3. 수도권 통학버스 및 충남형 M버스
                         ListView(
                           controller: controller,
                           padding: const EdgeInsets.all(18),
                           children: [
+                            // 충남형 광역급행 M2000
+                            Container(
+                              padding: const EdgeInsets.all(12),
+                              decoration: BoxDecoration(
+                                color: Colors.teal.shade50,
+                                borderRadius: BorderRadius.circular(10),
+                                border: Border.all(color: Colors.teal.shade200),
+                              ),
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Row(
+                                    children: [
+                                      Icon(Icons.electric_bolt_rounded, size: 16, color: Colors.teal.shade800),
+                                      const SizedBox(width: 6),
+                                      Text('충남형 광역급행 M버스 (2000번) - 남서울대 정문 경유',
+                                          style: TextStyle(fontWeight: FontWeight.bold, fontSize: 12.5, color: Colors.teal.shade800)),
+                                    ],
+                                  ),
+                                  const SizedBox(height: 4),
+                                  const Text('• 주요 노선: 평택지제역(SRT) ⇄ 성환터미널 ⇄ 남서울대(정문) ⇄ 천안아산역(KTX) ⇄ 순천향대',
+                                      style: TextStyle(fontSize: 11.5)),
+                                  const Text('• 배차 간격: 20~30분 간격 (수도권 전철/천안 시내버스 환승할인 적용)',
+                                      style: TextStyle(fontSize: 11.5)),
+                                ],
+                              ),
+                            ),
+                            const SizedBox(height: 12),
                             Container(
                               padding: const EdgeInsets.all(12),
                               decoration: BoxDecoration(
