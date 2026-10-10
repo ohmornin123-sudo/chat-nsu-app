@@ -35,4 +35,4 @@ subprocess.run(["git", "add", "."], cwd=web_dir, check=True)
 subprocess.run(["git", "commit", "-m", "Auto-deploy updated Flutter web build"], cwd=web_dir)
 subprocess.run(["git", "push", "origin", "main"], cwd=web_dir, check=True)
 
-print("All done! Both App Source Code and Web Hosting are synced! Netlify will update in 5 seconds!")
+print("All done! Both App Source Code and Web Hosting are synced! Vercel will update automatically in ~15 seconds!")
